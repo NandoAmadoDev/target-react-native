@@ -1,7 +1,7 @@
-import { MaterialIcons } from '@expo/vector-icons'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { styles } from './styles'
 import { router } from 'expo-router'
+import { styles } from './styles'
+import { MaterialIcons } from '@expo/vector-icons'
 import { colors } from '@/theme'
 
 type Props = {

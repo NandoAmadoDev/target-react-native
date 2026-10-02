@@ -1,5 +1,5 @@
-import { colors, fontFamily } from '@/theme'
 import { StyleSheet } from 'react-native'
+import { colors, fontFamily } from '@/theme'
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
     gap: 5,
   },
   label: {
-    fontSize: 10,
-    color: colors.blue[300],
+    fontSize: 12,
+    color: colors.white,
     fontFamily: fontFamily.regular,
   },
   value: {

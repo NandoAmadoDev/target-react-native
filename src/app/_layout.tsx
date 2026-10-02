@@ -1,6 +1,6 @@
+import { Stack } from 'expo-router'
 import { colors } from '@/theme/colors'
 import { Loading } from '@/components/Loading'
-import { Stack } from 'expo-router'
 import {
   useFonts,
   Inter_400Regular,
