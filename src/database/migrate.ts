@@ -28,3 +28,7 @@ export async function migrate(database: SQLiteDatabase) {
       );
     `)
 }
+
+/*
+C:\Users\USER\AppData\Local\Google\AndroidStudio2026.2.1\device-explorer\Pixel 7 Pro\_\data\data\com.nandoamadodev.target\files\SQLite\target.db
+*/

@@ -1,0 +1,27 @@
+import { useSQLiteContext } from 'expo-sqlite'
+
+export type TargetCreate = {
+  name: string
+  amount: number
+}
+
+export function useTargetDatabase() {
+  const database = useSQLiteContext()
+
+  async function create(data: TargetCreate) {
+    const statement = await database.prepareAsync(
+      'INSERT INTO targets (name, amount) VALUES ($name, $amount)',
+    )
+
+    try {
+      await statement.executeAsync({
+        $name: data.name,
+        $amount: data.amount,
+      })
+    } finally {
+      await statement.finalizeAsync()
+    }
+  }
+
+  return { create }
+}

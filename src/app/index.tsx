@@ -1,9 +1,11 @@
-import { View, StatusBar } from 'react-native'
-import { router } from 'expo-router'
-import { Target } from '@/components/Target'
-import { List } from '@/components/List'
-import { HomeHeader } from '@/components/HomeHeader'
+import { router, useFocusEffect } from 'expo-router'
+import { useCallback } from 'react'
+import { Alert, StatusBar, View } from 'react-native'
 import { Button } from '@/components/Button'
+import { HomeHeader } from '@/components/HomeHeader'
+import { List } from '@/components/List'
+import { Target } from '@/components/Target'
+import { useTargetDatabase } from '@/database/useTargetDatabase'
 
 const summary = {
   total: 'R$ 2.680,00',
@@ -36,6 +38,24 @@ const targets = [
 ]
 
 export default function Index() {
+  const targetDatabase = useTargetDatabase()
+
+  async function fetchTargets() {
+    try {
+      const response = await targetDatabase.listBySavedValue()
+      console.log(response)
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar as metas.')
+      console.log(error)
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchTargets()
+    }, []),
+  )
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />
@@ -45,15 +65,19 @@ export default function Index() {
         title="Metas"
         data={targets}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Target data={item} onPress={() => router.navigate(`/in-progress/${item.id}`)} />}
+        renderItem={({ item }) => (
+          <Target
+            data={item}
+            onPress={() => router.navigate(`/in-progress/${item.id}`)}
+          />
+        )}
         emptyMessage="Nenhuma meta. Toque em nova meta para criar."
         containerStyle={{ paddingHorizontal: 24 }}
       />
 
-      <View style={{ padding:24, paddingBottom: 32}}>
-          <Button title='Nova meta' onPress={() => router.navigate("/target")} />
+      <View style={{ padding: 24, paddingBottom: 32 }}>
+        <Button title="Nova meta" onPress={() => router.navigate('/target')} />
       </View>
-
     </View>
   )
 }
