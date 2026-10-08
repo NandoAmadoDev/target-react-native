@@ -12,59 +12,116 @@ Com o Targets, é possível organizar objetivos financeiros, acompanhar quanto j
   <img src="screenshots/transacoes.png" alt="Detalhes da meta com histórico de transações" width="260" />
 </p>
 
+---
+
 ## ✨ Funcionalidades
 
-- Criação e edição de metas financeiras
-- Listagem de metas e acompanhamento do progresso de cada objetivo
-- Registro de transações de entrada e saída vinculadas às metas
-- Histórico de transações com valor, data e observação
-- Resumo financeiro de entradas, saídas e saldo
-- Armazenamento local com SQLite
-- Validação dos dados informados nos formulários
+- 🎯 Criação e edição de metas financeiras
+- 📋 Listagem de metas e acompanhamento do progresso de cada objetivo
+- 💰 Registro de transações de entrada e saída vinculadas às metas
+- 📊 Histórico de transações com valor, data e observação
+- 🧮 Resumo financeiro de entradas, saídas e saldo
+- 💾 Armazenamento local com SQLite
+- ✅ Validação dos dados informados nos formulários
 
-## 🛠️ Tecnologias
+---
 
-- **React Native** — desenvolvimento da interface mobile
-- **Expo** — ferramentas e ambiente de desenvolvimento
-- **TypeScript** — tipagem estática
-- **Expo Router** — navegação entre telas
-- **expo-sqlite** — banco de dados local
-- **React Hooks** — gerenciamento de estado e efeitos
+## 🛠️ Tecnologias utilizadas
+
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Expo](https://img.shields.io/badge/Expo-1C2024?style=for-the-badge&logo=expo&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Expo Router](https://img.shields.io/badge/Expo_Router-000020?style=for-the-badge&logo=expo&logoColor=white)
+
+### Principais ferramentas
+
+| Tecnologia | Utilização |
+|---|---|
+| React Native | Desenvolvimento da interface mobile |
+| Expo | Ambiente e ferramentas de desenvolvimento |
+| TypeScript | Tipagem estática e organização do código |
+| Expo Router | Navegação entre telas |
+| expo-sqlite | Persistência local de dados |
+| React Hooks | Gerenciamento de estados e efeitos |
+
+### 🏷️ Topics
+
+`react-native` · `expo` · `typescript` · `sqlite` · `mobile-app` · `financial-goals`
+
+---
 
 ## 📚 Aprendizados
 
-Este projeto permitiu praticar:
+Durante o desenvolvimento deste projeto, aprofundei meus conhecimentos em:
 
-- Estruturação de um aplicativo React Native com componentes reutilizáveis
+- Estruturação de aplicações React Native com componentes reutilizáveis
 - Navegação e passagem de parâmetros com Expo Router
-- Criação e acesso a tabelas SQLite
+- Criação e gerenciamento de tabelas SQLite
 - Operações assíncronas e consultas ao banco de dados
-- Desenvolvimento de hooks para acesso aos dados
+- Desenvolvimento de hooks personalizados para acesso aos dados
 - Formatação de valores monetários e validação de formulários
-- Construção de uma interface para acompanhamento de metas
+- Construção de interfaces para acompanhamento de metas financeiras
+- Organização e manutenção do código com TypeScript
 
-## 🚀 Como executar
+---
 
-**Pré-requisitos:** Node.js, npm e ambiente Expo configurados. Para executar a versão nativa no emulador Android, também é necessário configurar o Android Studio e o SDK Android.
+## 🚀 Como executar o projeto
+
+### Pré-requisitos
+
+- Node.js e npm instalados
+- Ambiente Expo configurado
+- Android Studio e Android SDK configurados para execução no emulador Android
+
+### 1. Clonar o repositório
 
 ```bash
-# Instalar as dependências
-npm install
+git clone https://github.com/NandoAmadoDev/target-react-native.git
+```
 
-# Iniciar o Expo
+### 2. Acessar a pasta
+
+```bash
+cd target-react-native
+```
+
+### 3. Instalar as dependências
+
+```bash
+npm install
+```
+
+### 4. Iniciar o Expo
+
+```bash
 npx expo start
 ```
 
-Para executar no Android (com emulador ou dispositivo configurado):
+### 5. Executar no Android
+
+Com o emulador ou dispositivo Android configurado:
 
 ```bash
 npx expo run:android
 ```
 
-## 👨‍💻 Sobre o projeto
+---
 
-Desenvolvido durante minha jornada de aprofundamento em desenvolvimento mobile. Após mais de **16 anos de experiência em desenvolvimento de sistemas**, sigo ampliando meus conhecimentos com **React Native, Expo e TypeScript**.
+## 👨‍💻 Sobre o desenvolvimento
 
-> A experiência que construí até aqui não é o fim da jornada. É a base para o próximo nível.
+Este projeto foi desenvolvido durante minha jornada de aprofundamento em desenvolvimento mobile.
 
-**Desenvolvido por [NandoAmadoDev](https://github.com/NandoAmadoDev) como projeto de aprendizado na formação da Rocketseat.**
+Após mais de **16 anos de experiência no desenvolvimento de sistemas corporativos**, sigo ampliando meus conhecimentos e explorando novas tecnologias, especialmente **React Native, Expo e TypeScript**.
+
+O Targets representa mais uma etapa dessa evolução profissional, consolidando conhecimentos em desenvolvimento mobile, navegação, persistência de dados e organização de aplicações.
+
+> 🚀 **A experiência que construí até aqui não é o fim da jornada. É a base para o próximo nível.**
+
+---
+
+### Desenvolvido por
+
+**[Fernando Amado — NandoAmadoDev](https://github.com/NandoAmadoDev)**
+
+Projeto de aprendizado desenvolvido durante a formação em React Native da **Rocketseat**.
