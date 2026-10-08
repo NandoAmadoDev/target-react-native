@@ -2,28 +2,25 @@ import { Alert, StatusBar, View } from 'react-native'
 import { useCallback, useState } from 'react'
 import { router, useFocusEffect } from 'expo-router'
 import { Button } from '@/components/Button'
-import { HomeHeader } from '@/components/HomeHeader'
+import { HomeHeader, HomeHeaderProps } from '@/components/HomeHeader'
 import { List } from '@/components/List'
 import { Loading } from '@/components/Loading'
 import { Target, TargetProps } from '@/components/Target'
 import { useTargetDatabase } from '@/database/useTargetDatabase'
+import { useTransactionsDatabase } from '@/database/useTransactionsDatabase'
 import { numberToCurrency } from '@/utils/NumberToCurrency'
 
-const summary = {
-  total: 'R$ 2.680,00',
-  input: { label: 'Entradas', value: 'R$ 6.184,90' },
-  output: { label: 'Saídas', value: '-R$ 883,65' },
-}
-
 export default function Index() {
+  const [summary, setSummary] = useState<HomeHeaderProps | null>(null)
   const [isFetching, setIsFetching] = useState(true)
   const [targets, setTargets] = useState<TargetProps[]>([])
 
   const targetDatabase = useTargetDatabase()
+  const transactionsDatabase = useTransactionsDatabase()
 
   async function fetchTargets(): Promise<TargetProps[]> {
     try {
-      const response = await targetDatabase.listBySavedValue()
+      const response = await targetDatabase.listByClosesTarget()
 
       return response.map((item) => ({
         id: String(item.id),
@@ -35,18 +32,46 @@ export default function Index() {
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar as metas.')
       console.log(error)
-
       return []
     }
   }
 
+  async function fetchSummary(): Promise<HomeHeaderProps | null> {
+    try {
+      const response = await transactionsDatabase.summary()
+
+      return {
+        total: numberToCurrency(response.input + response.output),
+        input: {
+          label: 'Entradas',
+          value: numberToCurrency(response.input),
+        },
+        output: {
+          label: 'Saídas',
+          value: numberToCurrency(response.output),
+        },
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar o resumo.')
+      console.log(error)
+      return null
+    }
+  }
+
   async function fetchData() {
-    const targetDataPromise = fetchTargets()
+    setIsFetching(true)
 
-    const [targetData] = await Promise.all([targetDataPromise])
+    try {
+      const [targetData, dataSummary] = await Promise.all([
+        fetchTargets(),
+        fetchSummary(),
+      ])
 
-    setTargets(targetData)
-    setIsFetching(false)
+      setTargets(targetData)
+      setSummary(dataSummary)
+    } finally {
+      setIsFetching(false)
+    }
   }
 
   useFocusEffect(
@@ -62,12 +87,13 @@ export default function Index() {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />
-      <HomeHeader data={summary} />
+
+      {summary && <HomeHeader data={summary} />}
 
       <List
         title="Metas"
         data={targets}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <Target
             data={item}
@@ -79,7 +105,10 @@ export default function Index() {
       />
 
       <View style={{ padding: 24, paddingBottom: 32 }}>
-        <Button title="Nova meta" onPress={() => router.navigate('/target')} />
+        <Button
+          title="Nova meta"
+          onPress={() => router.navigate('/target')}
+        />
       </View>
     </View>
   )

@@ -6,6 +6,20 @@ export type TransactionCreate = {
   observation?: string
 }
 
+export type TransactionResponse = {
+  id: number
+  target_id: number
+  amount: number
+  observation: string
+  created_at: Date
+  updated_at: Date
+}
+
+export type Summary = {
+  input: number
+  output: number
+}
+
 export function useTransactionsDatabase() {
   const database = useSQLiteContext()
 
@@ -30,5 +44,32 @@ export function useTransactionsDatabase() {
     }
   }
 
-  return { create }
+  function listByTargetId(id: number) {
+    return database.getAllAsync<TransactionResponse>(`
+        SELECT id, target_id, amount, observation, created_at, updated_at
+        FROM transactions
+        WHERE target_id = ${id}
+        ORDER BY created_at DESC
+      `)
+  }
+
+  async function remove(id: number) {
+    await database.runAsync('DELETE FROM transactions WHERE id = ?', id)
+  }
+
+  async function summary(): Promise<Summary> {
+    const response = await database.getFirstAsync<Summary>(`
+      SELECT
+        COALESCE(SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END), 0) AS input,
+        COALESCE(SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END), 0) AS output
+      FROM transactions
+    `)
+
+    return {
+      input: response?.input ?? 0,
+      output: response?.output ?? 0,
+    }
+  }
+
+  return { create, listByTargetId, remove, summary }
 }
